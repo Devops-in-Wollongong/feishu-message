@@ -1,0 +1,36 @@
+# feishu card message body
+# https://open.feishu.cn/document/ukTMukTMukTM/uEjNwUjLxYDM14SM2ATN
+
+newRelease:
+  enabled: false
+  title: New release
+  url: https://www.google.com
+
+  git:
+    commit: CI_COMMIT_SHORT_SHA
+    url: CI_PROJECT_URL
+
+  notes: |-
+    **New features**
+    - feat: new route ([#99328](https://open.feishu.cn/))
+
+    **Bug fixes**
+    - fix: fix route ([#99328](https://open.feishu.cn/))
+
+    **Documentation**
+    - docs: Add skipCrds and ignoreMissingValueFiles to application.yaml example ([#99328](https://open.feishu.cn/))
+
+    **Other**
+    - chore(deps): bump decode-uri-component from 0.2.0 to 0.2.2 in /ui ([#99328](https://open.feishu.cn/))
+    - chore: add debug logs around CMP manifest generation ([#99328](https://open.feishu.cn/))
+
+newMergeRequest:
+  enabled: false
+  projectURL: CI_MERGE_REQUEST_PROJECT_URL
+  author: CI_COMMIT_AUTHOR
+  assignee: xxx@xxx.xxx
+  id: CI_MERGE_REQUEST_IID
+  title: CI_MERGE_REQUEST_TITLE
+  notes: |-
+    **Bug fixes**
+    - fix: fix route ([#99328](https://open.feishu.cn/))

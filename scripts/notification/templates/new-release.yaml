@@ -1,0 +1,34 @@
+{{- if .Values.newRelease.enabled -}}
+{{- with .Values.newRelease -}}
+msg_type: interactive
+card:
+  config:
+    wide_screen_mode: true
+  elements:
+    - tag: "div"
+      fields:
+        - is_short: true
+          text:
+            content: {{ printf "🖥  <font color='grey'>**网址**</font>\n[%s](%s)" .url .url | quote }}
+            tag: lark_md
+        - is_short: true
+          text:
+            content: {{ printf "💼  <font color='green'>**git**</font>\n[%s](%s)" .git.commit .git.url | quote }}
+            tag: lark_md
+    - tag: hr
+    - tag: div
+      text:
+        content: {{ .notes | quote }}
+        tag: lark_md
+    - tag: hr
+    - tag: note
+      elements:
+        - tag: lark_md
+          content: {{ printf "🏠[【From Eren】](%s)" .url | quote }}
+  header:
+    template: green
+    title:
+      content: {{ printf "🎉【%s】%s" .title (now | date "2006-01-02 15:04:05") | quote }}
+      tag: "plain_text"
+{{- end -}}
+{{- end -}}

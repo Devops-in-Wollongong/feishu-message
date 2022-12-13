@@ -1,0 +1,43 @@
+{{- if .Values.newMergeRequest.enabled -}}
+{{- with .Values.newMergeRequest -}}
+msg_type: interactive
+card:
+  config:
+    wide_screen_mode: true
+  elements:
+    - tag: "div"
+      fields:
+        - is_short: true
+          text:
+            content: {{ printf "👨🏻‍💻  <font color='grey'>**Assigner**</font>\n%s" .author | quote }}
+            tag: lark_md
+        - is_short: true
+          text:
+            content: {{ printf "🫵🏼  <font color='grey'>**Assignee**</font>\n<at email=%s>" .assignee | quote }}
+            tag: lark_md
+        - is_short: false
+          text:
+            content: ""
+            tag: lark_md
+        - is_short: true
+          text:
+            {{- $url := printf "%s/-/merge_requests/%s" .projectURL .id }}
+            content: {{ printf "💼  <font color='green'>**merge request**</font>\n%s[#%v](%s)" .title .id $url | quote }}
+            tag: lark_md
+    - tag: hr
+    - tag: div
+      text:
+        content: {{ .notes | quote }}
+        tag: lark_md
+    - tag: hr
+    - tag: note
+      elements:
+        - tag: lark_md
+          content: {{ printf "🏠【From Eren】" }}
+  header:
+    template: blue
+    title:
+      content: {{ printf "🛎【Merge Request】%s" (dateInZone "2006-01-02 15:04:05" (now) "Asia/Shanghai") | quote }}
+      tag: "plain_text"
+{{- end -}}
+{{- end -}}
