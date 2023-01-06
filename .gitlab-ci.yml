@@ -1,1 +1,34 @@
+stages:
+  - merge-request
 
+variables:
+  FEISHU_BOT: ""
+
+merge-request:
+  image: helm:v3.10.2
+  stage: merge-request
+
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - |-
+      message=$(helm template scripts/notification --set-string newMergeRequest.enabled=true \
+        --set-string newMergeRequest.projectURL="$CI_MERGE_REQUEST_PROJECT_URL" \
+        --set-string newMergeRequest.author="$CI_COMMIT_AUTHOR" \
+        --set-string newMergeRequest.id="$CI_MERGE_REQUEST_IID" \
+        --set-string newMergeRequest.title="$CI_MERGE_REQUEST_TITLE" \
+        --set-string newMergeRequest.notes="$CI_COMMIT_MESSAGE" \
+        --set-string newMergeRequest.assignee="xxxx@xxx.com" | yq -ojson)
+
+      echo $message
+
+      curl -H "Content-Type:application/json" -X POST -k $FEISHU_BOT -d "$message"
+
+notification:
+  image: helm:3.10.2
+  stage: notification
+  only:
+    - master
+  script:
+    - |-
+      bash scripts/notification.sh $feishu_url "$CI_COMMIT_MESSAGE" $CI_COMMIT_SHORT_SHA $CI_PROJECT_URL

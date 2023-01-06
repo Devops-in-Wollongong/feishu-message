@@ -22,7 +22,7 @@ card:
         - is_short: true
           text:
             {{- $url := printf "%s/-/merge_requests/%s" .projectURL .id }}
-            content: {{ printf "💼  <font color='green'>**merge request**</font>\n%s[#%v](%s)" .title .id $url | quote }}
+            content: {{ printf "💼  <font color='green'>**Merge request**</font>\n%s[#%v](%s)" .title .id $url | quote }}
             tag: lark_md
     - tag: hr
     - tag: div
